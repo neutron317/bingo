@@ -18,3 +18,4 @@
 
 - [ゲーム仕様](docs/spec.md) — ルール・設定・ゲームの流れ
 - [技術構成](docs/architecture.md) — スタック・設計・ディレクトリ構成
+- [API詳細設計](docs/api.md) — 各APIの目的・送受信データ
