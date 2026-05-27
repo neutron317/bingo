@@ -1,0 +1,5 @@
+allowBuilds:
+  bcrypt: true
+  esbuild: true
+minimumReleaseAgeExclude:
+  - ioredis@5.11.0
