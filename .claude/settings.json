@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "input=$(cat); cmd=$(echo \"$input\" | jq -r '.tool_input.command // \"\"'); if echo \"$cmd\" | grep -q 'git commit'; then cd /Users/h-obara/git/bingo/backend && mise exec -- pnpm check; fi"
+            "command": "input=$(cat); cmd=$(echo \"$input\" | jq -r '.tool_input.command // \"\"'); if echo \"$cmd\" | grep -q 'git commit'; then cd /Users/h-obara/git/bingo/backend && pnpm check; fi"
           }
         ]
       }
