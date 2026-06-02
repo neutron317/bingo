@@ -1,5 +1,12 @@
-import { serve } from "@hono/node-server";
+import { createAdaptorServer } from "@hono/node-server";
 import { Hono } from "hono";
+import { Server as SocketIOServer } from "socket.io";
+import type {
+	ClientToServerEvents,
+	InterServerEvents,
+	ServerToClientEvents,
+	SocketData,
+} from "./types.js";
 
 const app = new Hono();
 
@@ -7,12 +14,35 @@ app.get("/", (c) => {
 	return c.text("Hello Hono!");
 });
 
-serve(
-	{
-		fetch: app.fetch,
-		port: 3000,
+app.onError((err, c) => {
+	console.error(err);
+	return c.json({ error: "INTERNAL_SERVER_ERROR", message: err.message }, 500);
+});
+
+const server = createAdaptorServer({ fetch: app.fetch });
+
+const io = new SocketIOServer<
+	ClientToServerEvents,
+	ServerToClientEvents,
+	InterServerEvents,
+	SocketData
+>(server, {
+	cors: {
+		origin: "*",
+		methods: ["GET", "POST"],
 	},
-	(info) => {
-		console.log(`Server is running on http://localhost:${info.port}`);
-	},
-);
+});
+
+io.on("connection", (socket) => {
+	console.log(`Socket connected: ${socket.id}`);
+
+	socket.on("disconnect", (reason) => {
+		console.log(`Socket disconnected: ${socket.id}, reason: ${reason}`);
+	});
+});
+
+const PORT = 3000;
+
+server.listen(PORT, () => {
+	console.log(`Server is running on http://localhost:${PORT}`);
+});
