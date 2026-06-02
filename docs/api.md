@@ -69,7 +69,7 @@
 | | データ | 目的 |
 |--|--------|------|
 | 送信 | なし（URLのみ） | — |
-| 受信 | `roomId`, `cardSize`, `numberRange`, `cardMode`, `hasRoomPassword`, `hasHostPassword`, `status` | ルームが存在するか確認し、パスワード入力欄を出すかどうかを判断する |
+| 受信 | `roomId`, `cardSize`, `numberRange`, `cardMode`, `status` | ルームが存在するか確認する |
 
 ```json
 // レスポンス
@@ -78,8 +78,6 @@
   "cardSize": 5,
   "numberRange": { "min": 1, "max": 75 },
   "cardMode": "random",
-  "hasRoomPassword": true,
-  "hasHostPassword": true,
   "status": "waiting"
 }
 ```
