@@ -40,8 +40,10 @@ export function registerPlayerHandlers(io: IO, socket: TypedSocket): void {
 			return;
 		}
 
-		const roomPassword = payload.roomPassword ?? "";
-		const ok = await bcrypt.compare(roomPassword, room.roomPasswordHash);
+		const ok = await bcrypt.compare(
+			payload.roomPassword,
+			room.roomPasswordHash,
+		);
 		if (!ok) {
 			callback({
 				error: { code: "WRONG_PASSWORD", message: "Wrong room password" },
