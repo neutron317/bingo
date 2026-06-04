@@ -16,7 +16,12 @@ export function validateCreateRoomRequest(
 }
 
 function isValidCardSize(value: unknown): value is number {
-	return typeof value === "number" && [3, 5, 7].includes(value);
+	return (
+		typeof value === "number" &&
+		Number.isInteger(value) &&
+		value >= 2 &&
+		value <= 100
+	);
 }
 
 function isValidNumberRange(value: unknown, cardSize: number): boolean {
@@ -24,7 +29,6 @@ function isValidNumberRange(value: unknown, cardSize: number): boolean {
 	const { min, max } = value as Record<string, unknown>;
 	if (typeof min !== "number" || typeof max !== "number") return false;
 	if (!Number.isInteger(min) || !Number.isInteger(max)) return false;
-	if (min < 1) return false;
 	if (min >= max) return false;
 	return max - min + 1 >= cardSize * cardSize;
 }

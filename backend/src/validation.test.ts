@@ -11,24 +11,24 @@ const valid = {
 
 describe("validateCreateRoomRequest", () => {
 	describe("valid inputs", () => {
-		it("accepts cardSize 3 with sufficient range", () => {
+		it("accepts cardSize 2 with sufficient range", () => {
 			expect(
 				validateCreateRoomRequest({
 					...valid,
-					cardSize: 3,
-					numberRange: { min: 1, max: 9 },
+					cardSize: 2,
+					numberRange: { min: 1, max: 4 },
 				}),
 			).toBe(true);
 		});
 		it("accepts cardSize 5", () => {
 			expect(validateCreateRoomRequest(valid)).toBe(true);
 		});
-		it("accepts cardSize 7 with sufficient range", () => {
+		it("accepts cardSize 100 with sufficient range", () => {
 			expect(
 				validateCreateRoomRequest({
 					...valid,
-					cardSize: 7,
-					numberRange: { min: 1, max: 49 },
+					cardSize: 100,
+					numberRange: { min: 1, max: 10000 },
 				}),
 			).toBe(true);
 		});
@@ -61,11 +61,21 @@ describe("validateCreateRoomRequest", () => {
 	});
 
 	describe("cardSize", () => {
-		it("rejects 4", () => {
-			expect(validateCreateRoomRequest({ ...valid, cardSize: 4 })).toBe(false);
+		it("rejects 1", () => {
+			expect(validateCreateRoomRequest({ ...valid, cardSize: 1 })).toBe(false);
 		});
 		it("rejects 0", () => {
 			expect(validateCreateRoomRequest({ ...valid, cardSize: 0 })).toBe(false);
+		});
+		it("rejects 101", () => {
+			expect(validateCreateRoomRequest({ ...valid, cardSize: 101 })).toBe(
+				false,
+			);
+		});
+		it("rejects decimal", () => {
+			expect(validateCreateRoomRequest({ ...valid, cardSize: 5.5 })).toBe(
+				false,
+			);
 		});
 		it("rejects string '5'", () => {
 			expect(validateCreateRoomRequest({ ...valid, cardSize: "5" })).toBe(
@@ -141,21 +151,21 @@ describe("validateCreateRoomRequest", () => {
 				}),
 			).toBe(false);
 		});
-		it("rejects min = 0", () => {
+		it("accepts min = 0", () => {
 			expect(
 				validateCreateRoomRequest({
 					...valid,
 					numberRange: { min: 0, max: 75 },
 				}),
-			).toBe(false);
+			).toBe(true);
 		});
-		it("rejects negative min", () => {
+		it("accepts negative min", () => {
 			expect(
 				validateCreateRoomRequest({
 					...valid,
-					numberRange: { min: -1, max: 75 },
+					numberRange: { min: -50, max: 75 },
 				}),
-			).toBe(false);
+			).toBe(true);
 		});
 	});
 
