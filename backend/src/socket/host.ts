@@ -15,6 +15,15 @@ export function registerHostHandlers(io: IO, socket: TypedSocket): void {
 			callback({ code: "WRONG_PASSWORD", message: "Wrong host password" });
 			return;
 		}
+		const sockets = await io.in(roomId).fetchSockets();
+		const hostExists = sockets.some((s) => s.data.role === "host");
+		if (hostExists) {
+			callback({
+				code: "HOST_ALREADY_CONNECTED",
+				message: "Host is already connected",
+			});
+			return;
+		}
 		await socket.join(roomId);
 		socket.data = { roomId, role: "host" };
 		callback(null);
