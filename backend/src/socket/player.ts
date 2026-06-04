@@ -1,23 +1,10 @@
 import bcrypt from "bcrypt";
 import { nanoid } from "nanoid";
 import { getRoom, saveRoom } from "../room.js";
-import type { IO, StoredRoom, TypedSocket } from "../types.js";
+import type { IO, TypedSocket } from "../types.js";
+import { buildRoomState } from "./utils.js";
 
 const MAX_PLAYERS = 20;
-
-function buildRoomState(room: StoredRoom, playerId?: string) {
-	const player = playerId
-		? room.players.find((p) => p.id === playerId)
-		: undefined;
-	return {
-		status: room.status,
-		players: room.players.map(({ id, name, bingos }) => ({ id, name, bingos })),
-		drawnNumbers: room.drawnNumbers,
-		card: player?.card ?? null,
-		cardSize: room.cardSize,
-		numberRange: room.numberRange,
-	};
-}
 
 export function registerPlayerHandlers(io: IO, socket: TypedSocket): void {
 	socket.on("player:join", async (payload, callback) => {
