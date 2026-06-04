@@ -23,6 +23,8 @@ function isValidNumberRange(value: unknown, cardSize: number): boolean {
 	if (typeof value !== "object" || value === null) return false;
 	const { min, max } = value as Record<string, unknown>;
 	if (typeof min !== "number" || typeof max !== "number") return false;
+	if (!Number.isInteger(min) || !Number.isInteger(max)) return false;
+	if (min < 1) return false;
 	if (min >= max) return false;
 	return max - min + 1 >= cardSize * cardSize;
 }

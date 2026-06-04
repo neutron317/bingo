@@ -125,6 +125,38 @@ describe("validateCreateRoomRequest", () => {
 				}),
 			).toBe(false);
 		});
+		it("rejects decimal min", () => {
+			expect(
+				validateCreateRoomRequest({
+					...valid,
+					numberRange: { min: 1.5, max: 75 },
+				}),
+			).toBe(false);
+		});
+		it("rejects decimal max", () => {
+			expect(
+				validateCreateRoomRequest({
+					...valid,
+					numberRange: { min: 1, max: 75.5 },
+				}),
+			).toBe(false);
+		});
+		it("rejects min = 0", () => {
+			expect(
+				validateCreateRoomRequest({
+					...valid,
+					numberRange: { min: 0, max: 75 },
+				}),
+			).toBe(false);
+		});
+		it("rejects negative min", () => {
+			expect(
+				validateCreateRoomRequest({
+					...valid,
+					numberRange: { min: -1, max: 75 },
+				}),
+			).toBe(false);
+		});
 	});
 
 	describe("cardMode", () => {
