@@ -83,7 +83,7 @@ export interface HostVerifyBingoPayload {
 export interface PlayerJoinNewPayload {
 	roomId: string;
 	name: string;
-	roomPassword?: string;
+	roomPassword: string;
 }
 
 export interface PlayerJoinReconnectPayload {
