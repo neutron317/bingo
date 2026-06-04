@@ -59,3 +59,14 @@ bingo/
 ├── docker-compose.yml
 └── README.md
 ```
+
+## 型定義（backend/src/types.ts）
+
+WebSocket ハンドラで共通して使う型を `types.ts` に集約している。
+
+| 型 | 実体 | 用途 |
+|---|---|---|
+| `IO` | `Server<...>` | Socket.io サーバー全体。ルームへの一括送信に使う |
+| `TypedSocket` | `Socket<...>` | 個々の接続。イベント受信・単一クライアントへの送信に使う |
+
+どちらも `ClientToServerEvents` / `ServerToClientEvents` / `InterServerEvents` / `SocketData` の4つの型パラメータを持ち、イベント名・引数の型チェックが効くようになっている。

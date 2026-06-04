@@ -1,27 +1,7 @@
 import bcrypt from "bcrypt";
 import { nanoid } from "nanoid";
-import type { Server, Socket } from "socket.io";
 import { getRoom, saveRoom } from "../room.js";
-import type {
-	ClientToServerEvents,
-	InterServerEvents,
-	ServerToClientEvents,
-	SocketData,
-	StoredRoom,
-} from "../types.js";
-
-type IO = Server<
-	ClientToServerEvents,
-	ServerToClientEvents,
-	InterServerEvents,
-	SocketData
->;
-type TypedSocket = Socket<
-	ClientToServerEvents,
-	ServerToClientEvents,
-	InterServerEvents,
-	SocketData
->;
+import type { IO, StoredRoom, TypedSocket } from "../types.js";
 
 const MAX_PLAYERS = 20;
 

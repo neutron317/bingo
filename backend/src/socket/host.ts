@@ -1,26 +1,6 @@
 import bcrypt from "bcrypt";
-import type { Server, Socket } from "socket.io";
-import { getRoom, saveRoom } from "../room.js";
-import type {
-	ClientToServerEvents,
-	InterServerEvents,
-	ServerToClientEvents,
-	SocketData,
-	StoredRoom,
-} from "../types.js";
-
-type IO = Server<
-	ClientToServerEvents,
-	ServerToClientEvents,
-	InterServerEvents,
-	SocketData
->;
-type TypedSocket = Socket<
-	ClientToServerEvents,
-	ServerToClientEvents,
-	InterServerEvents,
-	SocketData
->;
+import { getRoom } from "../room.js";
+import type { IO, StoredRoom, TypedSocket } from "../types.js";
 
 function buildRoomState(room: StoredRoom, playerId?: string) {
 	const player = playerId
