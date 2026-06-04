@@ -61,7 +61,8 @@ export type WsErrorCode =
 	| "ROOM_FULL"
 	| "PLAYER_NOT_FOUND"
 	| "NOT_HOST"
-	| "GAME_ALREADY_ENDED";
+	| "GAME_ALREADY_ENDED"
+	| "HOST_ALREADY_CONNECTED";
 
 export interface WsError {
 	code: WsErrorCode;
