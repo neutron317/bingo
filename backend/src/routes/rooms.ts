@@ -10,10 +10,8 @@ import { validateCreateRoomRequest } from "../validation.js";
 export const roomsRouter = new Hono();
 
 roomsRouter.post("/", async (c) => {
-	let body: unknown;
-	try {
-		body = await c.req.json();
-	} catch {
+	const body = await c.req.json().catch(() => null);
+	if (body === null) {
 		return c.json<RestError>(
 			{ error: "INVALID_PARAMS", message: "Invalid JSON body" },
 			400,
