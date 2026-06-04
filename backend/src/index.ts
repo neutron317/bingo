@@ -1,6 +1,7 @@
 import { createAdaptorServer } from "@hono/node-server";
 import { Hono } from "hono";
 import { Server as SocketIOServer } from "socket.io";
+import { roomsRouter } from "./routes/rooms.js";
 import type {
 	ClientToServerEvents,
 	InterServerEvents,
@@ -13,6 +14,7 @@ const app = new Hono();
 app.get("/", (c) => {
 	return c.text("Hello Hono!");
 });
+app.route("/rooms", roomsRouter);
 
 app.onError((err, c) => {
 	console.error(err);
