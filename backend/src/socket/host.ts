@@ -1,20 +1,7 @@
 import bcrypt from "bcrypt";
 import { getRoom } from "../room.js";
-import type { IO, StoredRoom, TypedSocket } from "../types.js";
-
-function buildRoomState(room: StoredRoom, playerId?: string) {
-	const player = playerId
-		? room.players.find((p) => p.id === playerId)
-		: undefined;
-	return {
-		status: room.status,
-		players: room.players.map(({ id, name, bingos }) => ({ id, name, bingos })),
-		drawnNumbers: room.drawnNumbers,
-		card: player?.card ?? null,
-		cardSize: room.cardSize,
-		numberRange: room.numberRange,
-	};
-}
+import type { IO, TypedSocket } from "../types.js";
+import { buildRoomState } from "./utils.js";
 
 export function registerHostHandlers(io: IO, socket: TypedSocket): void {
 	socket.on("host:join", async ({ roomId, hostPassword }, callback) => {
