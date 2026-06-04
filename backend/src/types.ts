@@ -190,6 +190,24 @@ export interface SocketData {
 	playerId?: string;
 }
 
+// --- Socket.io typed helpers ---
+
+import type { Server, Socket } from "socket.io";
+
+export type IO = Server<
+	ClientToServerEvents,
+	ServerToClientEvents,
+	InterServerEvents,
+	SocketData
+>;
+
+export type TypedSocket = Socket<
+	ClientToServerEvents,
+	ServerToClientEvents,
+	InterServerEvents,
+	SocketData
+>;
+
 // --- Redis storage ---
 
 export interface StoredPlayer extends Player {
