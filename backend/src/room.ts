@@ -40,3 +40,12 @@ export async function getRoom(roomId: string): Promise<StoredRoom | null> {
 	if (json === null) return null;
 	return JSON.parse(json) as StoredRoom;
 }
+
+export async function saveRoom(room: StoredRoom): Promise<void> {
+	await redis.set(
+		`room:${room.id}`,
+		JSON.stringify(room),
+		"EX",
+		ROOM_TTL_SECONDS,
+	);
+}
