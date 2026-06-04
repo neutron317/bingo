@@ -2,6 +2,8 @@ import { createAdaptorServer } from "@hono/node-server";
 import { Hono } from "hono";
 import { Server as SocketIOServer } from "socket.io";
 import { roomsRouter } from "./routes/rooms.js";
+import { registerHostHandlers } from "./socket/host.js";
+import { registerPlayerHandlers } from "./socket/player.js";
 import type {
 	ClientToServerEvents,
 	InterServerEvents,
@@ -37,10 +39,8 @@ const io = new SocketIOServer<
 
 io.on("connection", (socket) => {
 	console.log(`Socket connected: ${socket.id}`);
-
-	socket.on("disconnect", (reason) => {
-		console.log(`Socket disconnected: ${socket.id}, reason: ${reason}`);
-	});
+	registerHostHandlers(io, socket);
+	registerPlayerHandlers(io, socket);
 });
 
 const PORT = 3000;
