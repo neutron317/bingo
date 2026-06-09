@@ -61,7 +61,8 @@ export type WsErrorCode =
 	| "ROOM_FULL"
 	| "PLAYER_NOT_FOUND"
 	| "NOT_HOST"
-	| "GAME_ALREADY_ENDED";
+	| "GAME_ALREADY_ENDED"
+	| "HOST_ALREADY_CONNECTED";
 
 export interface WsError {
 	code: WsErrorCode;
@@ -83,7 +84,7 @@ export interface HostVerifyBingoPayload {
 export interface PlayerJoinNewPayload {
 	roomId: string;
 	name: string;
-	roomPassword?: string;
+	roomPassword: string;
 }
 
 export interface PlayerJoinReconnectPayload {
@@ -189,6 +190,24 @@ export interface SocketData {
 	role: "host" | "player";
 	playerId?: string;
 }
+
+// --- Socket.io typed helpers ---
+
+import type { Server, Socket } from "socket.io";
+
+export type IO = Server<
+	ClientToServerEvents,
+	ServerToClientEvents,
+	InterServerEvents,
+	SocketData
+>;
+
+export type TypedSocket = Socket<
+	ClientToServerEvents,
+	ServerToClientEvents,
+	InterServerEvents,
+	SocketData
+>;
 
 // --- Redis storage ---
 
